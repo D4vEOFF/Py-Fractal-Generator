@@ -8,8 +8,8 @@ TODO: Popis komponent, tříd, ...
 # Instalace
 Je doporučeno spouštět aplikaci v rámci [virtuálního prostředí](https://wiki.python.org/moin/Virtualenv). Toho lze docílit spuštěním příkazů níže.
 ```
-python -m venv venv
-venv\Scripts\activate
+python -m venv .\FractalGenerator\venv
+.\FractalGenerator\Scripts\activate
 ```
 Ve virtuálním prostředí nyní stačí doinstalovat potřebné **Python** moduly.
 ```
