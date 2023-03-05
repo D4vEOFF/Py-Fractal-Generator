@@ -50,7 +50,7 @@ Pomocný program vytvořený jako součást diplomové práce s názvem **Frakt�
 ## Pomocné komponenty
 
 ### turtle.py
-Základní logika želví grafiky. Samotné vykreslování se však **neprobíhá**, metody a vlastnosti třídy pouze simulují pohyb pomyslné želvy. Instance třídy uchovává *aktuální pozici želvy*, její *úhel otočení* a *zda je pero spuštěno na plátně*.
+Základní logika želví grafiky. Samotné vykreslování zde však **neprobíhá**, metody a vlastnosti třídy pouze simulují pohyb pomyslné želvy. Instance třídy uchovává *aktuální pozici želvy*, její *úhel otočení* a *zda je pero spuštěno na plátně*.
 - **Vlastnosti:**
   - `position` - aktuální pozice želvy uložená jako instance třídy `Vector`,
   - `step` - délka kroku při posunutí želvy,
