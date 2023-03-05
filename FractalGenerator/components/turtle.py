@@ -1,5 +1,7 @@
 
-from vector import Vector
+from components.vector import Vector
+from components.event import Event
+
 from math import sin, cos
 
 class Turtle:
@@ -9,6 +11,16 @@ class Turtle:
         self._step = step
         self._angle = angle
         self._pen_down = False
+
+        self._line_drawn = Event()
+
+
+    # Events
+    def add_line_drawn_subscriber(self, method):
+        self._line_drawn += method
+    def remove_line_drawn_subscriber(self, method):
+        self._line_drawn -= method
+
 
     @property
     def position(self) -> Vector:
@@ -44,4 +56,8 @@ class Turtle:
     
     def forward(self) -> None:
         """Moves the turtle forward by specified distance in its current direction."""
+        prev = self._position
         self._position += self._step * Vector(cos(self._angle), sin(self._angle))
+
+        if self._pen_down:
+            self._line_drawn(prev, self._position)
