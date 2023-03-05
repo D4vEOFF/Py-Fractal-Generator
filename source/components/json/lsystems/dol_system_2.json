@@ -1,0 +1,9 @@
+{
+    "name": "DOL system n. 2",
+    "axiom": "L",
+    "rules": {
+        "L": "L+R+",
+        "R": "-L-R"
+    },
+    "rotateByAngle": 90
+}

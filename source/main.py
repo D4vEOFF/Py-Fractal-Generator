@@ -2,6 +2,7 @@
 import sys
 import tkinter as tk
 import math
+import json
 
 from components.turtle import Turtle
 from components.vector import Vector
@@ -17,6 +18,7 @@ defaults = {
     "stroke_width": 3,
     "step": 50,
     "iteration_count": 1,
+    "start_angle": 0
 }
 
 def parse_args() -> dict:
@@ -28,6 +30,7 @@ def parse_args() -> dict:
         "stroke_width": defaults["stroke_width"],
         "step": defaults["step"],
         "iteration_count": defaults["iteration_count"],
+        "angle": defaults["start_angle"]
     }
     cmd = sys.argv
 
@@ -71,6 +74,17 @@ def parse_args() -> dict:
             if val < 0:
                 raise ValueError("Iteration count must be a positive integer.")
             args_parsed["iteration_count"] = val
+        
+        # JSON path
+        if arg == "-path":
+            val = cmd[index + 1]
+            args_parsed["path"] = val
+        
+        # Start angle
+        if arg == "-angle":
+            val = float(cmd[index + 1])
+            args_parsed["start_angle"] = val
+
     
     return args_parsed
 
@@ -85,17 +99,22 @@ def main() -> None:
     win_width = args['width']
     win_height = args['height']
 
+    # Parse JSON
+    with open(args["path"]) as f:
+        fractal = json.loads(f.read())
+
     # Display window
     window.geometry(f"{win_width}x{win_height}")
+    window.title(f"Fractal Generator - {fractal['name']}")
 
     canvas=tk.Canvas(window, width=win_width, height=win_height)
     canvas.pack()
 
     # Turtle
     turtle = Turtle(
-        position=Vector(2 * win_width // 3, win_height - 10),
-        step=args['step'],
-        angle=-90
+        position=Vector(),
+        step=args["step"],
+        angle=args["start_angle"]
     )
 
     lines = []
@@ -118,13 +137,11 @@ def main() -> None:
     turtle.add_line_drawn_subscriber(on_forward)
     
     # Load L-system
-    lsystem = LSystem("F", {
-        "F": "→F[+F]F[-F]F",
-    })
+    lsystem = LSystem(fractal["axiom"], fractal["rules"])
     
     lsystem.iterate(args["iteration_count"])
 
-    angle = 25.7
+    angle = fractal["rotateByAngle"]
     stack = Stack()
     for char in lsystem.word:
         if char == '+':

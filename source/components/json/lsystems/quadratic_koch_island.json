@@ -1,0 +1,8 @@
+{
+    "name": "Quadratic Koch Island",
+    "axiom": "F-F-F-F",
+    "rules": {
+        "F": "F-F+F+FF-F-F+F"
+    },
+    "rotateByAngle": 90
+}

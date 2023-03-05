@@ -2,7 +2,7 @@
 class Vector:
     """Represents a 2D vector."""
 
-    def __init__(self, x: float, y: float) -> None:
+    def __init__(self, x: float = 0, y: float = 0) -> None:
         self._x, self._y = x, y
     
     # X coordinate
