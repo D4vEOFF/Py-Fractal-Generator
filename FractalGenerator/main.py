@@ -16,7 +16,6 @@ defaults = {
     "stroke_width": 3,
     "step": 50,
     "iteration_count": 1,
-    "angle": 90
 }
 
 def parse_args() -> dict:
@@ -28,7 +27,6 @@ def parse_args() -> dict:
         "stroke_width": defaults["stroke_width"],
         "step": defaults["step"],
         "iteration_count": defaults["iteration_count"],
-        "angle": defaults["angle"]
     }
     cmd = sys.argv
 
@@ -72,13 +70,6 @@ def parse_args() -> dict:
             if val < 0:
                 raise ValueError("Iteration count must be a positive integer.")
             args_parsed["iteration_count"] = val
-        
-        # Rotation angle
-        if arg == "-angle":
-            val = float(cmd[index + 1])
-            if val <= 0:
-                raise ValueError("Rotation angle must be a float value.")
-            args_parsed["angle"] = val
     
     return args_parsed
 
@@ -124,24 +115,27 @@ def main() -> None:
         lines.append([prevPos, newPos])
 
     turtle.add_line_drawn_subscriber(on_forward)
-
-    turtle.pen_down = True
     
-    # Debug
-    lsystem = LSystem("R", {
-        "L": "R+L+R",
-        "R": "L-R-L"
+    # Load L-system
+    lsystem = LSystem("F+F+F+F", {
+        "F": "F+f-FF+F+FF+Ff+FF-f+FF-F-FF-Ff-FFF",
+        "f": "ffffff"
     })
     
     lsystem.iterate(args["iteration_count"])
 
-    angle = args["angle"]
+    angle = 90
     for char in lsystem.word:
         if char == '+':
             turtle.rotate(angle)
         elif char == '-':
             turtle.rotate(-angle)
-        else: turtle.forward()
+        elif char == 'f':
+            turtle.pen_down = False
+            turtle.forward()
+        else:
+            turtle.pen_down = True
+            turtle.forward()
 
     # Center figure
     center = Vector((x_min + x_max) // 2, (y_min + y_max) // 2)
