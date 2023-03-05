@@ -1,7 +1,6 @@
 
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget
-import screeninfo
 import sys
+import tkinter as tk
 
 
 def parse_args(width_default: int, height_default: int) -> dict:
@@ -32,34 +31,15 @@ def parse_args(width_default: int, height_default: int) -> dict:
 
 def main() -> None:
 
-    # Get primary monitor resolution
-    for monitor in screeninfo.get_monitors():
-        if not monitor.is_primary:
-            continue
+    window = tk.Tk()
 
-        mon_width = monitor.width
-        mon_height = monitor.height
-        break
+    mon_width = window.winfo_screenwidth()
+    mon_height = window.winfo_screenheight()
 
     # Attempt to parse command line arguments
     args = parse_args(1280, 720)
 
-    # Display window
-    app = QApplication([])
-
-    window = QWidget()
-    window.setWindowTitle("PyQt App")
-    window.setGeometry(
-        (mon_width - args["width"]) // 2,
-        (mon_height - args["height"]) // 2,
-        args["width"],
-        args["height"])
-    helloMsg = QLabel("<h1>Hello, World!</h1>", parent=window)
-    helloMsg.move(0, 0)
-
-    window.show()
-
-    sys.exit(app.exec())
+    # TODO: implement TKinter window display
 
 
 if __name__ == '__main__':
