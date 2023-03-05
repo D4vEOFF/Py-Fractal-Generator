@@ -24,7 +24,7 @@ class Turtle:
 
     @property
     def position(self) -> Vector:
-        return self._position
+        return Vector(self._position.x, self._position.y)
     
     @property
     def step(self) -> float:

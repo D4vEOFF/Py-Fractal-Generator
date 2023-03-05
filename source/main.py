@@ -5,6 +5,7 @@ import math
 
 from components.turtle import Turtle
 from components.vector import Vector
+from components.stack import Stack
 
 from components.fractals.lsystem import LSystem
 
@@ -94,7 +95,7 @@ def main() -> None:
     turtle = Turtle(
         position=Vector(2 * win_width // 3, win_height - 10),
         step=args['step'],
-        angle=180
+        angle=-90
     )
 
     lines = []
@@ -117,14 +118,14 @@ def main() -> None:
     turtle.add_line_drawn_subscriber(on_forward)
     
     # Load L-system
-    lsystem = LSystem("F+F+F+F", {
-        "F": "F+f-FF+F+FF+Ff+FF-f+FF-F-FF-Ff-FFF",
-        "f": "ffffff"
+    lsystem = LSystem("F", {
+        "F": "→F[+F]F[-F]F",
     })
     
     lsystem.iterate(args["iteration_count"])
 
-    angle = 90
+    angle = 25.7
+    stack = Stack()
     for char in lsystem.word:
         if char == '+':
             turtle.rotate(angle)
@@ -133,6 +134,12 @@ def main() -> None:
         elif char == 'f':
             turtle.pen_down = False
             turtle.forward()
+        elif char == '[':
+            stack.push((turtle.position, turtle.angle))
+        elif char == ']':
+            state = stack.pop()
+            turtle.position = state[0]
+            turtle.angle = state[1]
         else:
             turtle.pen_down = True
             turtle.forward()
