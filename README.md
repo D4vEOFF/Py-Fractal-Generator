@@ -1,7 +1,13 @@
 # Fractal Generator
 Pomocný program vytvořený jako součást diplomové práce s názvem **Fraktální geometrie pro (zdatné) amatéry** (odkaz [zde](https://github.com/D4vEOFF/Diploma-Thesis)).
 
-TODO: Struktura projektu
+```
+.
+├── source
+├── .gitignore                              
+├── LICENSE
+├── README.md
+```
 
 TODO: Popis komponent, tříd, ...
 
