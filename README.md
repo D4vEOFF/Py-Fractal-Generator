@@ -12,11 +12,12 @@
     - [stack.py](#stackpy)
   - [Fraktály](#fraktály)
     - [lsystem.py](#lsystempy)
-- [Instalace](#instalace)
 - [Příklad použití](#příklad-použití)
   - [Třída Turtle](#třída-turtle)
   - [Třída LSystem](#třída-lsystem)
-- [TODO: Symboly a jejich význam](#todo-symboly-a-jejich-význam)
+- [Instalace](#instalace)
+- [TODO: Symboly L-systémů a jejich význam](#todo-symboly-l-systémů-a-jejich-význam)
+- [TODO: Parametry](#todo-parametry)
 
 # Fractal Generator
 Pomocný program vytvořený jako součást diplomové práce s názvem **Fraktální geometrie pro (zdatné) amatéry** (odkaz [zde](https://github.com/D4vEOFF/Diploma-Thesis)).
@@ -37,10 +38,10 @@ Pomocný program vytvořený jako součást diplomové práce s názvem **Frakt�
 ├── ...
 │   ├── components
 │   │   ├── fractals                            # Třídy pro jednotlivé typy fraktálů
-│   │   │   ├── lsystem.py                          # L-systémy
+│   │   │   └── lsystem.py                          # L-systémy
 │   │   ├── event.py                            # Třída definující rozhraní pro implementaci událostí
 │   │   ├── turtle.py                           # Třída pro želví grafiku
-│   │   ├── vector.py                           # Třída pro počítání s 2D vektory
+│   │   └── vector.py                           # Třída pro počítání s 2D vektory
 │   └── main.py                             # Hlavní logika programu
 └── ...
 ```
@@ -55,10 +56,13 @@ Základní logika želví grafiky. Samotné vykreslování zde však **neprobíh
   - `position` - aktuální pozice želvy uložená jako instance třídy `Vector`,
   - `step` - délka kroku při posunutí želvy,
   - `angle` - aktuální úhel natočení želvy ve stupních (interně uchováváno v radiánech),
+  - `lines` - seznam vykreslených úseček uložených jako dvojice obsahující počáteční a koncový bod (vrací **kopii seznamu**, nikoliv referenci),
   - `pen_down` - určuje, zda je pero položeno na plátně,
 - **Metody:**
   - `rotate(angle)` - otočí želvu o zadaný úhel,
   - `forward()` - posune želvu v aktuálním směru o zadanou délku kroku,
+  - `clear_lines()` - vymaže všechny uchované úsečky ze seznamu,
+  - `center_to(xc, yc)` - posune střed celého obrazce (tvořeného úsečkami) do pozice `(xc, yc)`,
   - `add_line_drawn_subscriber(method)` - připojí danou metodu k události `line_drawn`
   - `remove_line_drawn_subscriber(method)` - odebere danou metodu z události `line_drawn`
 - **Události:**
@@ -98,24 +102,13 @@ Implementuje zásobník jako datovou strukturu.
 ## Fraktály
 
 ### lsystem.py
-Implementuje třídu pro práci s *L-systémy*. (Více informací k L-systémům [zde](https://en.wikipedia.org/wiki/L-system#:~:text=An%20L%2Dsystem%20consists%20of,generated%20strings%20into%20geometric%20structures.))
+Implementuje třídu pro práci s *L-systémy*. (Více informací k L-systémům např. [zde](https://en.wikipedia.org/wiki/L-system#:~:text=An%20L%2Dsystem%20consists%20of,generated%20strings%20into%20geometric%20structures.))
 - **Vlastnosti:**
   - `word` - aktuální řetězec vzniklý aplikací pravidel z počátečního symbolu (tzv. axiomu),
   - `rules` - slovník uchovávající přepisovací pravidla,
   - `total_iterations` - celkový počet již provedených iterací
 - **Metody**
   - `iterate(iteration_count)` - vypočítá zadaný počet iterací L-systému z aktuálního řetězce
-
-# Instalace
-Je doporučeno spouštět aplikaci v rámci [virtuálního prostředí](https://wiki.python.org/moin/Virtualenv). Toho lze docílit spuštěním příkazů níže.
-```
-python -m venv .\source\env
-.\source\Scripts\activate
-```
-Ve virtuálním prostředí nyní stačí doinstalovat potřebné **Python** moduly (ty lze nalézt v souboru `requirements.txt`).
-```
-pip install -r requirements.txt
-```
 
 # Příklad použití
 ## Třída Turtle
@@ -152,4 +145,17 @@ lsystem.iterate(3)                                          # Další 3 iterace
 print(lsystem.total_iterations)                             # Celkový počet iterací provedených v L-systému (zde 7)
 ```
 
-# TODO: Symboly a jejich význam
+# Instalace
+Je doporučeno spouštět aplikaci v rámci [virtuálního prostředí](https://wiki.python.org/moin/Virtualenv). Toho lze docílit spuštěním příkazů níže.
+```
+python -m venv .\source\env
+.\source\Scripts\activate
+```
+Ve virtuálním prostředí nyní stačí doinstalovat potřebné **Python** moduly (ty lze nalézt v souboru `requirements.txt`).
+```
+pip install -r requirements.txt
+```
+
+# TODO: Symboly L-systémů a jejich význam
+
+# TODO: Parametry

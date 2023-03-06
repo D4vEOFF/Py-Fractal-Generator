@@ -116,25 +116,6 @@ def main() -> None:
         step=args["step"],
         angle=args["start_angle"]
     )
-
-    lines = []
-    x_min, y_min = math.inf, math.inf
-    x_max, y_max = -math.inf, -math.inf
-    def on_forward(prevPos, newPos):
-        nonlocal x_min, x_max, y_min, y_max
-        m_x = min(prevPos.x, newPos.x)
-        m_y = min(prevPos.y, newPos.y)
-        M_x = max(prevPos.x, newPos.x)
-        M_y = max(prevPos.y, newPos.y)
-
-        if x_min > m_x: x_min = m_x
-        if y_min > m_y: y_min = m_y
-        if x_max < M_x: x_max = M_x
-        if y_max < M_y: y_max = M_y
-
-        lines.append([prevPos, newPos])
-
-    turtle.add_line_drawn_subscriber(on_forward)
     
     # Load L-system
     lsystem = LSystem(fractal["axiom"], fractal["rules"])
@@ -161,16 +142,10 @@ def main() -> None:
             turtle.pen_down = True
             turtle.forward()
 
-    # Center figure
-    center = Vector((x_min + x_max) // 2, (y_min + y_max) // 2)
-    translation_vector = Vector(win_width // 2, win_height // 2) - center
-
-    for line in lines:
-        line[0] += translation_vector
-        line[1] += translation_vector
+    turtle.center_to(win_width // 2, win_height // 2)
 
     # Draw figure
-    for line in lines:
+    for line in turtle.lines:
         canvas.create_line(line[0].x, line[0].y, line[1].x, line[1].y, fill=args["stroke_color"], width=args["stroke_width"])
 
     window.mainloop()

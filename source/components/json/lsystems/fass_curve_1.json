@@ -1,0 +1,9 @@
+{
+    "name": "FASS curve n. 1",
+    "axiom": "L",
+    "rules": {
+        "L": "L+R++R-L--LL-R+",
+        "R": "-L+RR++R+L--L-R"
+    },
+    "rotateByAngle": 60
+}

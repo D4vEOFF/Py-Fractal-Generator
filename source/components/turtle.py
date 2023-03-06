@@ -11,6 +11,10 @@ class Turtle:
         self._step = step
         self._angle = (angle % 360) * math.pi / 180
         self._pen_down = False
+        self._lines = []
+
+        self._x_min, self._y_min = position.x, position.y
+        self._x_max, self._y_max = position.x, position.y
 
         self._line_drawn = Event()
 
@@ -38,6 +42,10 @@ class Turtle:
     def pen_down(self) -> bool:
         return self._pen_down
     
+    @property
+    def lines(self) -> list:
+        return list(self._lines)
+    
     @position.setter
     def position(self, new_position: Vector) -> None:
         self._position = new_position
@@ -54,6 +62,10 @@ class Turtle:
     def pen_down(self, put_pen_down: bool) -> None:
         self._pen_down = put_pen_down
     
+    def clear_lines(self):
+        """Removes all saved lines."""
+        self._lines.clear()
+
     def rotate(self, rotate_by):
         """Rotates turtle by a given angle."""
         self._angle += (rotate_by * math.pi / 180) % (2 * math.pi)
@@ -63,5 +75,21 @@ class Turtle:
         prev = self._position
         self._position += self._step * Vector(math.cos(self._angle), math.sin(self._angle))
 
+        # Recalc min/max coords
+        if self._x_min > self._position.x: self._x_min = self._position.x
+        if self._y_min > self._position.y: self._y_min = self._position.y
+        if self._x_max < self._position.x: self._x_max = self._position.x
+        if self._y_max < self._position.y: self._y_max = self._position.y
+
         if self._pen_down:
+            self._lines.append([prev, self._position])
             self._line_drawn(prev, self._position)
+
+    def center_to(self, xc: float, yc: float) -> None:
+        """Translates all lines (their center) to specified position."""
+        lines_center = Vector((self._x_min + self._x_max) // 2, (self._y_min + self._y_max) // 2)
+        translation_vector = Vector(xc, yc) - lines_center
+
+        for line in self._lines:
+            line[0] += translation_vector
+            line[1] += translation_vector
