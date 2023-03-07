@@ -75,24 +75,24 @@ Práce s vektory v rovině. Obsahuje implementaci základních vlastností a met
 - **Vlastnosti:**
   - `x` - x-ová souřadnice vektoru,
   - `y` - y-ová souřadnice vektoru,
-  - `magnitude_squared` - druhá mocnina délky vektoru (odmocninu zde není implementována pro rychlejší výpočet)
+  - `magnitude_squared` - druhá mocnina délky vektoru (odmocnina zde není počítána pro rychlejší výpočet)
 - **Operátory:**
   - `__add__` - součet dvojice vektorů (vrací vektor `(x1 + x2, y1 + y2)`),
   - `__sub__` - rozdíl dvojice vektorů (vrací vektor `(x1 - x2, y1 - y2)`),
   - `__rmul__` - násobení vektoru skalárem z prava (vrací vektor `(a * x1, a * y1)`),
   - `__mul__` - násobení vektoru skalárem z leva,
   - `__truediv__` - dělení vektoru skalárem (vrací vektor `(x1 / a, y1 / a)` pro `a` nenulové)
-  - `__raise_instance_error` - vyvolá výjimku v případě v případě chybné třídy, jejíž je operand instancí
+  - `__raise_instance_error` - vyvolá výjimku v případě chybné třídy, jejíž je operand instancí
 
 ### event.py
-Implementuje rozhraní pro práci v událostmi v rámci ostatních tříd.
+Implementuje rozhraní pro práci s událostmi v rámci ostatních tříd.
 - **Operátory:**
   - `__iadd__` - přidá novou metodu do události,
   - `__isub__` - odebere existující metodu z události,
   - `__call__` - vyvolá všechny metody odebírající událost
 
 ### stack.py
-Implementuje zásobník jako datovou strukturu.
+Implementuje zásobník (datovou strukturu).
 - **Vlastnosti:**
   - `items` - vrátí kopii seznamu všech prvků v zásobníku,
 - **Metody:**
