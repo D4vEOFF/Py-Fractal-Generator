@@ -30,7 +30,7 @@ def parse_args() -> dict:
         "stroke_width": defaults["stroke_width"],
         "step": defaults["step"],
         "iteration_count": defaults["iteration_count"],
-        "angle": defaults["start_angle"]
+        "start_angle": defaults["start_angle"]
     }
     cmd = sys.argv
 
