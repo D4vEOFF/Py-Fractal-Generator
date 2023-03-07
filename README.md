@@ -67,6 +67,7 @@ Základní logika želví grafiky. Samotné vykreslování zde však **neprobíh
   - `remove_line_drawn_subscriber(method)` - odebere danou metodu z události `line_drawn`
 - **Události:**
   - `line_drawn` - vyvolána, kdykoliv je pero položeno na plátně a došlo k posunutí želvy (tj. byla nakreslena úsečka), přičemž odebírající metody obdrží jako parametry *počáteční* a *koncový* bod úsečky (jako instance třídy `Vector`)
+
 Odkaz na soubor [zde](source/main.py).
 
 ### vector.py
