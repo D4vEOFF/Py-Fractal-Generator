@@ -1,4 +1,6 @@
 
+import math
+
 class Vector:
     """Represents a 2D vector."""
 
@@ -29,14 +31,19 @@ class Vector:
     # Magnitude squared
     @property
     def magnitude_squared(self) -> float:
-        """Magnitude squared."""
+        """Vector magnitude squared."""
         return self._x**2 + self._y**2
+    
+    @property
+    def magnitude(self) -> float:
+        """Vector magnitude."""
+        return math.sqrt(self.magnitude_squared)
 
-
+    # Error/exception invoking
     def __raise_instance_error(self, instance: str) -> None:
         raise ValueError(f"Passed parameter is not a '{instance}' instance.")
 
-    # Operations
+    # Operations (overriding)
     def __add__(self, other):
         if (not isinstance(other, Vector)):
             self.__raise_instance_error("Vector")

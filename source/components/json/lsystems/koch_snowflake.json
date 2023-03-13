@@ -1,0 +1,8 @@
+{
+    "name": "Koch Snowflake",
+    "axiom": "F++F++F++",
+    "rules": {
+        "F": "F-F++F-F"
+    },
+    "rotateByAngle": 60
+}
