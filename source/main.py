@@ -77,7 +77,7 @@ def parse_args() -> dict:
                 raise ValueError("Iteration count must be a positive integer.")
             args_parsed["iteration_count"] = val
         
-        # JSON path
+        # File path
         if arg == "-path":
             val = cmd[index + 1]
             args_parsed["path"] = val
@@ -108,7 +108,11 @@ def main() -> None:
 
     # Parse JSON
     with open(args["path"]) as f:
-        fractal = json.loads(f.read())
+        try:
+            fractal = json.loads(f.read())
+        except json.JSONDecodeError as err:
+            print(err)
+            sys.exit(-1)
 
     # Display window
     window.geometry(f"{win_width}x{win_height}")
