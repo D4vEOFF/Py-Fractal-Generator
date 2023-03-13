@@ -106,7 +106,7 @@ def main() -> None:
     win_height = args['height']
     prompt = args["prompt"]
 
-    # Parse JSON
+    # Parse file contents
     with open(args["path"]) as f:
         try:
             fractal = json.loads(f.read())
