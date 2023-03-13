@@ -18,7 +18,8 @@ defaults = {
     "stroke_width": 3,
     "step": 50,
     "iteration_count": 1,
-    "start_angle": 0
+    "start_angle": 0,
+    "prompt": False
 }
 
 def parse_args() -> dict:
@@ -30,7 +31,8 @@ def parse_args() -> dict:
         "stroke_width": defaults["stroke_width"],
         "step": defaults["step"],
         "iteration_count": defaults["iteration_count"],
-        "start_angle": defaults["start_angle"]
+        "start_angle": defaults["start_angle"],
+        "prompt": defaults["prompt"]
     }
     cmd = sys.argv
 
@@ -84,6 +86,10 @@ def parse_args() -> dict:
         if arg == "-angle":
             val = float(cmd[index + 1])
             args_parsed["start_angle"] = val
+        
+        # Control-prompting
+        if arg == "-prompt":
+            args_parsed["prompt"] = True
 
     
     return args_parsed
@@ -98,6 +104,7 @@ def main() -> None:
 
     win_width = args['width']
     win_height = args['height']
+    prompt = args["prompt"]
 
     # Parse JSON
     with open(args["path"]) as f:
@@ -120,6 +127,9 @@ def main() -> None:
     # Load L-system
     lsystem = LSystem(fractal["axiom"], fractal["rules"])
     
+    if prompt:
+        lsystem.add_iteration_performed_subscriber(lambda word, iteration: print(f"Iteration n. {iteration} string length: {len(word)}"))
+
     lsystem.iterate(args["iteration_count"])
 
     angle = fractal["rotateByAngle"]
