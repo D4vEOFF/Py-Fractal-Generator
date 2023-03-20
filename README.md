@@ -59,7 +59,7 @@ Základní logika želví grafiky. Samotné vykreslování zde však **neprobíh
   - `lines` - seznam vykreslených úseček uložených jako dvojice obsahující počáteční a koncový bod (vrací **kopii seznamu**, nikoliv referenci),
   - `pen_down` - určuje, zda je pero položeno na plátně,
 - **Metody:**
-  - `rotate(angle)` - otočí želvu o zadaný úhel,
+  - `rotate(angle)` - otočí želvu o zadaný úhel (ve stupních),
   - `forward()` - posune želvu v aktuálním směru o zadanou délku kroku,
   - `clear_lines()` - vymaže všechny uchované úsečky ze seznamu,
   - `center_to(xc, yc)` - posune střed celého obrazce (tvořeného úsečkami) do pozice `(xc, yc)`,
