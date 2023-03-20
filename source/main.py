@@ -1,14 +1,11 @@
 
 import sys
 import tkinter as tk
-import math
 import json
 
-from components.turtle import Turtle
-from components.vector import Vector
-from components.stack import Stack
-
-from components.fractals.lsystem import LSystem
+from components.fractals.fractal import FractalType
+from components.fractals.graphics import *
+from components.fractals.checker import *
 
 # Default command line argument values
 defaults = {
@@ -114,6 +111,11 @@ def main() -> None:
             print(err)
             sys.exit(-1)
 
+    # Classify fractal
+    fractal_type = FractalType.NONE
+    if is_LSystem(fractal):
+        fractal_type = FractalType.LSYSTEM
+    
     # Display window
     window.geometry(f"{win_width}x{win_height}")
     window.title(f"Fractal Generator - {fractal['name']}")
@@ -121,46 +123,9 @@ def main() -> None:
     canvas=tk.Canvas(window, width=win_width, height=win_height)
     canvas.pack()
 
-    # Turtle
-    turtle = Turtle(
-        position=Vector(),
-        step=args["step"],
-        angle=args["start_angle"]
-    )
-    
-    # Load L-system
-    lsystem = LSystem(fractal["axiom"], fractal["rules"])
-    
-    if prompt:
-        lsystem.add_iteration_performed_subscriber(lambda word, iteration: print(f"Iteration n. {iteration} string length: {len(word)}"))
-
-    lsystem.iterate(args["iteration_count"])
-
-    angle = fractal["rotateByAngle"]
-    stack = Stack()
-    for char in lsystem.word:
-        if char == '+':
-            turtle.rotate(angle)
-        elif char == '-':
-            turtle.rotate(-angle)
-        elif char == 'f':
-            turtle.pen_down = False
-            turtle.forward()
-        elif char == '[':
-            stack.push((turtle.position, turtle.angle))
-        elif char == ']':
-            state = stack.pop()
-            turtle.position = state[0]
-            turtle.angle = state[1]
-        else:
-            turtle.pen_down = True
-            turtle.forward()
-
-    turtle.center_to(win_width // 2, win_height // 2)
-
-    # Draw figure
-    for line in turtle.lines:
-        canvas.create_line(line[0].x, line[0].y, line[1].x, line[1].y, fill=args["stroke_color"], width=args["stroke_width"])
+    # Draw fractal
+    if fractal_type == FractalType.LSYSTEM:
+        draw_LSystem(fractal, args, canvas)
 
     window.mainloop()
 
