@@ -1,0 +1,8 @@
+{
+    "name": "Koch curve n. 3",
+    "axiom": "F",
+    "rules": {
+        "F": "F-F----F-F"
+    },
+    "rotateByAngle": 60
+}

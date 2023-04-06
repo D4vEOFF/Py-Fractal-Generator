@@ -1,0 +1,9 @@
+{
+    "name": "Sierpińsky triangle",
+    "axiom": "A",
+    "rules": {
+        "A": "B-A-B",
+        "B": "A+B+A"
+    },
+    "rotateByAngle": 60
+}

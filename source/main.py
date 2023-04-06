@@ -2,6 +2,7 @@
 import sys
 import tkinter as tk
 import json
+import canvasvg
 
 from components.fractals.fractal import FractalType
 from components.fractals.graphics import *
@@ -13,10 +14,10 @@ defaults = {
     "height": 720,
     "stroke_color": "black",
     "stroke_width": 3,
-    "step": 50,
+    "step": 5,
     "iteration_count": 1,
     "start_angle": 0,
-    "prompt": False
+    "prompt": False,
 }
 
 def parse_args() -> dict:
@@ -87,7 +88,11 @@ def parse_args() -> dict:
         # Control-prompting
         if arg == "-prompt":
             args_parsed["prompt"] = True
-
+        
+        # Save to SVG file
+        if arg == "-svg-path":
+            val = cmd[index + 1]
+            args_parsed["svg_path"] = val
     
     return args_parsed
 
@@ -126,8 +131,13 @@ def main() -> None:
     # Draw fractal
     if fractal_type == FractalType.LSYSTEM:
         draw_LSystem(fractal, args, canvas)
+    
+    # Save canvas to SVG
+    if 'svg_path' in args.keys():
+        canvasvg.saveall(args['svg_path'], canvas)
 
     window.mainloop()
+    sys.exit(0)
 
 
 if __name__ == '__main__':
