@@ -109,7 +109,8 @@ def main() -> None:
     prompt = args["prompt"]
 
     # Parse file contents
-    with open(args["path"]) as f:
+    file_path = args["path"]
+    with open(file_path) as f:
         try:
             fractal = json.loads(f.read())
         except json.JSONDecodeError as err:
@@ -120,6 +121,7 @@ def main() -> None:
     fractal_type = FractalType.NONE
     if is_LSystem(fractal):
         fractal_type = FractalType.LSYSTEM
+    else: raise KeyError(f"Invalid file format: {file_path}")
     
     # Display window
     window.geometry(f"{win_width}x{win_height}")

@@ -1,5 +1,5 @@
 {
-    "name": "Sierpińsky triangle",
+    "name": "Sierpinsky triangle",
     "axiom": "A",
     "rules": {
         "A": "B-A-B",
