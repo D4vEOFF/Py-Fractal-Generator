@@ -11,8 +11,8 @@ class IFS(IFractalIterable):
         for tpl in tr_coefs:
             self._transformations.append(
                 lambda p: [
-                    tpl[0]*p[0] + tpl[1]*p[1] + tpl[4],
-                    tpl[2]*p[0] + tpl[3]*p[1] + tpl[5]
+                    tpl[0]*p.x + tpl[1]*p.y + tpl[4],
+                    tpl[2]*p.x + tpl[3]*p.y + tpl[5]
                 ]
             )
 
@@ -34,3 +34,8 @@ class IFS(IFractalIterable):
                     figures_new.append(figure_new)
         
         self._figures = figures_new
+    
+
+    def center_to(self, xc: float, yc: float) -> None:
+        """Translates all figures (their center) to specified position."""
+        pass

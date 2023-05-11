@@ -5,3 +5,4 @@ class FractalType(Enum):
     LSYSTEM = 1
     TEA = 2
     NONE = 3
+    IFS = 4

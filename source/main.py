@@ -133,6 +133,8 @@ def main() -> None:
     # Draw fractal
     if fractal_type == FractalType.LSYSTEM:
         draw_LSystem(fractal, args, canvas)
+    elif fractal_type == FractalType.IFS:
+        pass
     
     # Save canvas to SVG
     if 'svg_path' in args.keys():

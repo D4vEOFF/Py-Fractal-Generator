@@ -4,6 +4,7 @@ from ..vector import Vector
 from ..turtle import Turtle
 
 from ..fractals.lsystem import LSystem
+from ..fractals.ifs import IFS
 
 def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
     # Turtle
@@ -46,3 +47,7 @@ def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
     # Draw figure
     for line in turtle.lines:
         canvas.create_line(line[0].x, line[0].y, line[1].x, line[1].y, fill=args["stroke_color"], width=args["stroke_width"])
+
+
+def draw_IFS(fractal: dict, args: dict, canvas: object):
+    pass
