@@ -42,7 +42,7 @@ def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
             turtle.pen_down = True
             turtle.forward()
 
-    turtle.center_to(args["width"] // 2, args["height"] // 2)
+    turtle.center_to(args["window_width"] // 2, args["window_height"] // 2)
 
     # Draw figure
     for line in turtle.lines:

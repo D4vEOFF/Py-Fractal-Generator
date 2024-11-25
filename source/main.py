@@ -1,4 +1,4 @@
-
+import argparse
 import sys
 import tkinter as tk
 import json
@@ -9,93 +9,27 @@ from components.fractals.graphics import *
 from components.fractals.checker import *
 
 # Default command line argument values
-defaults = {
-    "width": 1280,
-    "height": 720,
-    "stroke_color": "black",
-    "stroke_width": 3,
-    "step": 5,
-    "iteration_count": 1,
-    "start_angle": 0,
-    "prompt": False,
-}
-
 def parse_args() -> dict:
     """Parses command line arguments."""
-    args_parsed = {
-        "width": defaults["width"],
-        "height": defaults["height"],
-        "stroke_color": defaults["stroke_color"],
-        "stroke_width": defaults["stroke_width"],
-        "step": defaults["step"],
-        "iteration_count": defaults["iteration_count"],
-        "start_angle": defaults["start_angle"],
-        "prompt": defaults["prompt"]
-    }
-    cmd = sys.argv
-
-    for index, arg in enumerate(cmd):
-        # Window width
-        if arg == "-w":
-            val = int(cmd[index + 1])
-            if val <= 0:
-                raise ValueError("Window resolution must be a pair of positive values.")
-            args_parsed["width"] = val
-        
-        # Window height
-        if arg == "-h":
-            val = int(cmd[index + 1])
-            if val <= 0:
-                raise ValueError("Window resolution must be a pair of positive values.")
-            args_parsed["height"] = val
-        
-        # Stroke color
-        if arg == "-sc":
-            val = cmd[index + 1]
-            args_parsed["stroke_color"] = val
-        
-        # Stroke width
-        if arg == "-sw":
-            val = int(cmd[index + 1])
-            if val <= 0:
-                raise ValueError("Stroke width must be a positive integer.")
-            args_parsed["stroke_width"] = val
-        
-        # Turtle step
-        if arg == "-step":
-            val = int(cmd[index + 1])
-            if val <= 0:
-                raise ValueError("Step must be a positive integer.")
-            args_parsed["step"] = val
-        
-        # Iteration count
-        if arg == "-iter":
-            val = int(cmd[index + 1])
-            if val < 0:
-                raise ValueError("Iteration count must be a positive integer.")
-            args_parsed["iteration_count"] = val
-        
-        # File path
-        if arg == "-path":
-            val = cmd[index + 1]
-            args_parsed["path"] = val
-        
-        # Start angle
-        if arg == "-angle":
-            val = float(cmd[index + 1])
-            args_parsed["start_angle"] = val
-        
-        # Control-prompting
-        if arg == "-prompt":
-            args_parsed["prompt"] = True
-        
-        # Save to SVG file
-        if arg == "-svg-path":
-            val = cmd[index + 1]
-            args_parsed["svg_path"] = val
+    parser = argparse.ArgumentParser(description="Fractal Generator Arguments")
     
-    return args_parsed
-
+    # Arguments definition
+    parser.add_argument("-ww", "--window-width", type=int, default=1280, help="Window width (default: 1280)")
+    parser.add_argument("-wh", "--window-height", type=int, default=720, help="Window height (default: 720)")
+    parser.add_argument("-sc", "--stroke-color", type=str, default="black", help="Stroke color (default: black)")
+    parser.add_argument("-sw", "--stroke-width", type=int, default=3, help="Stroke width (default: 3)")
+    parser.add_argument("-step", type=int, default=5, help="Step size (default: 5)")
+    parser.add_argument("-iter", "--iteration-count", type=int, default=1, help="Iteration count (default: 1)")
+    parser.add_argument("-angle", "--start-angle", type=float, default=0, help="Start angle (default: 0)")
+    parser.add_argument("-prompt", action="store_true", help="Enable prompt mode")
+    parser.add_argument("-path", type=str, help="File path to fractal JSON definition")
+    parser.add_argument("-svg-path", type=str, help="Path to save SVG output")
+    
+    # Parse the arguments
+    args = parser.parse_args()
+    
+    # Convert Namespace to dictionary
+    return vars(args)
 
 def main() -> None:
 
@@ -104,8 +38,10 @@ def main() -> None:
     # Attempt to parse command line arguments
     args = parse_args()
 
-    win_width = args['width']
-    win_height = args['height']
+    print(args)
+
+    win_width = args['window_width']
+    win_height = args['window_height']
     prompt = args["prompt"]
 
     # Parse file contents
@@ -137,7 +73,7 @@ def main() -> None:
         pass
     
     # Save canvas to SVG
-    if 'svg_path' in args.keys():
+    if args['svg_path'] is not None:
         canvasvg.saveall(args['svg_path'], canvas)
 
     window.mainloop()
