@@ -66,4 +66,7 @@ class Vector:
         return 1 / number * self
 
     def __str__(self) -> str:
+        return __repr__()
+    
+    def __repr__(self) -> str:
         return f"({self._x}, {self._y})"
