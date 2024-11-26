@@ -56,21 +56,15 @@ def draw_IFS(fractal: dict, args: dict, canvas: object):
     for point in fractal['starting_figure']:
         starting_figure.append(Vector(point[0], point[1]))
     scale = args['scale']
-    # starting_figure = []
-    # for point in fractal['starting_figure']:
-    #     scaled_x = point[0] * scale
-    #     scaled_y = point[1] * scale
-    #     starting_figure.append(Vector(scaled_x, scaled_y))
 
     ifs = IFS(starting_figure, fractal['mappings'])
     ifs.iterate(args['iteration_count'])
 
-    result_figures = ifs.figures
+    ifs.scale(args['scale'])
+    ifs.rotate(180 - args['start_angle'])
+    ifs.center_to(args["window_width"] // 2, args["window_height"] // 2)
 
-    # Scale figures
-    for i in range(len(result_figures)):
-        figure = result_figures[i]
-        result_figures[i] = [scale * figure[j] for j in range(len(figure))]
+    result_figures = ifs.figures
 
     # Plot figures
     figures_listified = []

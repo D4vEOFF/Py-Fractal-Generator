@@ -1,7 +1,8 @@
 
+from components.fractals.i_iterable import IFractalIterable
 from ..event import Event
 
-class LSystem:
+class LSystem(IFractalIterable):
 
     def __init__(self, start_symbol: str, rules: dict) -> None:
         self._word = start_symbol

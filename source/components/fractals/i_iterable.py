@@ -8,5 +8,5 @@ class IFractalIterable(ABC):
         return self._total_iterations
     
 
-    def iterate(self, iterations) -> None:
+    def iterate(self, iterations: int) -> None:
         pass
