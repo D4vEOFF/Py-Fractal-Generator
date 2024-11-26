@@ -50,4 +50,34 @@ def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
 
 
 def draw_IFS(fractal: dict, args: dict, canvas: object):
-    pass
+
+    # Represent all points as vectors
+    starting_figure = []
+    for point in fractal['starting_figure']:
+        starting_figure.append(Vector(point[0], point[1]))
+    scale = args['scale']
+    # starting_figure = []
+    # for point in fractal['starting_figure']:
+    #     scaled_x = point[0] * scale
+    #     scaled_y = point[1] * scale
+    #     starting_figure.append(Vector(scaled_x, scaled_y))
+
+    ifs = IFS(starting_figure, fractal['mappings'])
+    ifs.iterate(args['iteration_count'])
+
+    result_figures = ifs.figures
+
+    # Scale figures
+    for i in range(len(result_figures)):
+        figure = result_figures[i]
+        result_figures[i] = [scale * figure[j] for j in range(len(figure))]
+
+    # Plot figures
+    figures_listified = []
+    for figure in result_figures:
+        figure_listified = []
+        for point in figure: figure_listified.append(point.as_list)
+        figures_listified.append(figure_listified)
+
+    for figure in figures_listified:
+        canvas.create_polygon(*[coord for point in figure for coord in point], fill='red', outline='black')

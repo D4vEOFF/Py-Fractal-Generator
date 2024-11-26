@@ -1,5 +1,7 @@
 
 from components.fractals.i_iterable import IFractalIterable
+from components.vector import Vector
+from copy import deepcopy
 
 class IFS(IFractalIterable):
     """Iteration Function System"""
@@ -9,12 +11,13 @@ class IFS(IFractalIterable):
 
         self._transformations = set()
         for tpl in tr_coefs:
-            self._transformations.append(
-                lambda p: [
-                    tpl[0]*p.x + tpl[1]*p.y + tpl[4],
-                    tpl[2]*p.x + tpl[3]*p.y + tpl[5]
-                ]
-            )
+            # print(tpl)
+            def transformation(point, tpl=deepcopy(tpl)):
+                return Vector(
+                    tpl[0]*point.x + tpl[1]*point.y + tpl[4],
+                    tpl[2]*point.x + tpl[3]*point.y + tpl[5]
+                )
+            self._transformations.add(transformation)
 
     
     @property
@@ -30,12 +33,13 @@ class IFS(IFractalIterable):
             for figure in self._figures:
                 for tr in self._transformations:
                     figure_new = []
+                    # print(figure_new)
                     for point in figure: figure_new.append(tr(point))
                     figures_new.append(figure_new)
         
-        self._figures = figures_new
+            self._figures = figures_new
     
 
     def center_to(self, xc: float, yc: float) -> None:
         """Translates all figures (their center) to specified position."""
-        pass
+        

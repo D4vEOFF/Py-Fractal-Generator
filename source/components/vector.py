@@ -38,6 +38,11 @@ class Vector:
     def magnitude(self) -> float:
         """Vector magnitude."""
         return math.sqrt(self.magnitude_squared)
+    
+    @property
+    def as_list(self) -> list:
+        """Converts vector coords into a list."""
+        return [self.x, self.y]
 
     # Error/exception invoking
     def __raise_instance_error(self, instance: str) -> None:
