@@ -56,12 +56,11 @@ def main() -> None:
             sys.exit(-1)
 
     # Classify fractal
-    fractal_type = FractalType.NONE
-    if is_LSystem(fractal):
-        fractal_type = FractalType.LSYSTEM
-    elif is_IFS(fractal):
-        fractal_type = FractalType.IFS
-    else: raise KeyError(f"Invalid file format: {file_path}")
+    try:
+        fractal_type = determine_fractal_type(fractal)
+    except ValueError as err:
+        print(err)
+        sys.exit(-1)
     
     # Display window
     window.geometry(f"{win_width}x{win_height}")
