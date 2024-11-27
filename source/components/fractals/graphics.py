@@ -55,7 +55,6 @@ def draw_IFS(fractal: dict, args: dict, canvas: object):
     starting_figure = []
     for point in fractal['starting_figure']:
         starting_figure.append(Vector(point[0], point[1]))
-    scale = args['scale']
 
     ifs = IFS(starting_figure, fractal['mappings'])
     ifs.iterate(args['iteration_count'])
@@ -74,4 +73,4 @@ def draw_IFS(fractal: dict, args: dict, canvas: object):
         figures_listified.append(figure_listified)
 
     for figure in figures_listified:
-        canvas.create_polygon(*[coord for point in figure for coord in point], fill='red', outline='black')
+        canvas.create_polygon(*[coord for point in figure for coord in point], fill=args['fill_color'], outline=args['stroke_color'])

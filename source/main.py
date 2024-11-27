@@ -19,6 +19,7 @@ def parse_console_arguments() -> dict:
     parser.add_argument("-wh", "--window-height", type=int, default=720, help="Window height (default: 720)")
     parser.add_argument("-sc", "--stroke-color", type=str, default="black", help="Stroke color (default: black)")
     parser.add_argument("-sw", "--stroke-width", type=int, default=3, help="Stroke width (default: 3)")
+    parser.add_argument("-fc", "--fill-color", type=str, default='red', help="Fill color (default: red)")
     parser.add_argument("-step", type=int, default=5, help="Step size (default: 5)")
     parser.add_argument("-scale", type=int, default=1, help="Plot scale (default: 1)")
     parser.add_argument("-iter", "--iteration-count", type=int, default=1, help="Iteration count (default: 1)")
