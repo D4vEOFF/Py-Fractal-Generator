@@ -1,6 +1,6 @@
 import math
 
-def evaluate_data_recursive(data, variables: list[str, float] = {}):
+def evaluate_recursive(data, variables: list[str, float] = {}):
     """
     Evaluates each element in the given input `data` based on the variables defined in the dictionary `variables`.
     
@@ -31,7 +31,7 @@ def evaluate_data_recursive(data, variables: list[str, float] = {}):
             raise ValueError(f"Error in evaluating expression: {e}")
 
     elif isinstance(data, list):
-        return [evaluate_data_recursive(element, variables) for element in data]
+        return [evaluate_recursive(element, variables) for element in data]
 
     elif isinstance(data, (int, float, complex)):
         return data

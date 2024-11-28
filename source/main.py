@@ -4,7 +4,7 @@ import tkinter as tk
 import json
 import canvasvg
 
-from components.evaluate import evaluate_data_recursive
+from components.evaluate import evaluate_recursive
 from components.fractals.fractal import FractalType
 from components.fractals.graphics import *
 from components.fractals.checker import *
@@ -84,8 +84,8 @@ def main() -> None:
     if fractal_type == FractalType.LSYSTEM:
         draw_LSystem(fractal, args, canvas)
     elif fractal_type == FractalType.IFS:
-        fractal['mappings'] = evaluate_data_recursive(fractal['mappings'])
-        fractal['starting_figure'] = evaluate_data_recursive(fractal['starting_figure'])
+        fractal['mappings'] = evaluate_recursive(fractal['mappings'])
+        fractal['starting_figure'] = evaluate_recursive(fractal['starting_figure'])
         draw_IFS(fractal, args, canvas)
     
     # Save canvas to SVG
