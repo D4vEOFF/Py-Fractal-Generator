@@ -12,6 +12,9 @@ def determine_fractal_type(fractal: dict) -> FractalType:
         
     Returns:
         FractalType: The type of the fractal (LSYSTEM, IFS) or None if not recognized.
+    
+    Raises:
+        ValueError: If the fractal dictionary does not match any known fractal type structure or if required values are of incorrect types.
     """
     # Check for L-System specific structure
     if all(key in fractal.keys() for key in lsystem_keys):

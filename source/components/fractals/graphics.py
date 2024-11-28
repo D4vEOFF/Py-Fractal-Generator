@@ -7,6 +7,14 @@ from ..fractals.lsystem import LSystem
 from ..fractals.ifs import IFS
 
 def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
+    """
+    Draws an L-System fractal on a canvas using Turtle graphics.
+    
+    Parameters:
+        fractal (dict): The fractal definition including axiom and rules.
+        args (dict): Configuration for drawing, such as step size, start angle, iteration count, etc.
+        canvas (object): The canvas where the fractal will be drawn.
+    """
     # Turtle
     turtle = Turtle(
         position=Vector(),
@@ -49,8 +57,15 @@ def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
         canvas.create_line(line[0].x, line[0].y, line[1].x, line[1].y, fill=args["stroke_color"], width=args["stroke_width"])
 
 
-def draw_IFS(fractal: dict, args: dict, canvas: object):
-
+def draw_IFS(fractal: dict, args: dict, canvas: object) -> None:
+    """
+    Draws an Iteration Function System (IFS) fractal on a canvas using transformations.
+    
+    Parameters:
+        fractal (dict): The fractal definition including starting figure and mappings.
+        args (dict): Configuration for drawing, such as iteration count, scale, start angle, etc.
+        canvas (object): The canvas where the fractal will be drawn.
+    """
     # Represent all points as vectors
     starting_figure = []
     for point in fractal['starting_figure']:

@@ -11,7 +11,12 @@ from components.fractals.checker import *
 
 # Default command line argument values
 def parse_console_arguments() -> dict:
-    """Parses command line arguments."""
+    """
+    Parses command line arguments for the fractal generator application.
+
+    Returns:
+        dict: A dictionary containing the parsed command line arguments.
+    """
     parser = argparse.ArgumentParser(description="Fractal Generator Arguments")
     
     # Arguments definition
@@ -36,7 +41,12 @@ def parse_console_arguments() -> dict:
 
 
 def main() -> None:
+    """
+    Main function to initialize the fractal generator application.
 
+    It creates a Tkinter window, parses command line arguments, loads fractal data from a file,
+    determines the fractal type, and draws the fractal on a Tkinter canvas.
+    """
     window = tk.Tk()
 
     # Attempt to parse command line arguments

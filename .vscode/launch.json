@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Main File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": ".\\source\\main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-ww", "1280", "-wh", "720", "-path", ".\\source\\components\\json\\ifs\\levi_dragon.json", "-step", "1", "-iter", "8", "-scale", "500"
+            ]
+        }
+    ]
+}
