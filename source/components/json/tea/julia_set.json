@@ -1,0 +1,7 @@
+{
+    "name": "Julia set for z^2 + 0.8775 e^{ia}",
+    "equation": "z_n = z_{n-1}**2 + c",
+    "next_member": "z_n",
+    "prev_member": "z_{n-1}",
+    "bound_var": "c"
+}
