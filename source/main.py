@@ -87,6 +87,8 @@ def main() -> None:
         fractal['mappings'] = evaluate_recursive(fractal['mappings'])
         fractal['starting_figure'] = evaluate_recursive(fractal['starting_figure'])
         draw_IFS(fractal, args, canvas)
+    elif fractal_type == FractalType.TEA:
+        draw_TEA(fractal, args, canvas)
     
     # Save canvas to SVG
     if args['svg_path'] is not None:

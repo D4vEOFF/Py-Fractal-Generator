@@ -14,7 +14,7 @@ class IFractalIterable(ABC):
         Returns:
             int: Total number of iterations.
         """
-        return self._total_iterations
+        pass
     
     def iterate(self, iterations: int) -> None:
         """

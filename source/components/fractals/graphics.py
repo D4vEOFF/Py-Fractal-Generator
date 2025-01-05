@@ -2,9 +2,11 @@
 from ..stack import Stack
 from ..vector import Vector
 from ..turtle import Turtle
+from ..color import hsv_to_hex
 
 from ..fractals.lsystem import LSystem
 from ..fractals.ifs import IFS
+from ..fractals.tea import TEA
 
 def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
     """
@@ -89,3 +91,33 @@ def draw_IFS(fractal: dict, args: dict, canvas: object) -> None:
 
     for figure in figures_listified:
         canvas.create_polygon(*[coord for point in figure for coord in point], fill=args['fill_color'], outline=args['stroke_color'])
+
+
+def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
+    
+    width, height = args['window_width'], args['window_height']
+    step = args['step']
+    max_iterations = args['iteration_count']
+    sequence, next_member, explore_var = fractal['sequence'], fractal['next_member'], fractal['explore_var']
+
+    tea = TEA(width, height, sequence, step)
+
+    tea.iterate(max_iterations)
+    iter_counts = tea.point_iteration_counts
+
+    # hex_color = hsv_to_hex(0.5, 1, 1)
+    # canvas.create_oval(5, 5, 2, 2, fill=hex_color)
+
+    # Plot points
+    point_size = step
+    for x in range(len(iter_counts[0])):
+        for y in range(len(iter_counts)):
+            iterations = iter_counts[y][x]
+            hex_color = hsv_to_hex(iterations / max_iterations, 1, 1)
+
+            x1, y1 = step * x - point_size, step * y - point_size
+            x2, y2 = step * x + point_size, step * y + point_size
+            # x1, y1 = x - point_size, y - point_size
+            # x2, y2 = x + point_size, y + point_size
+
+            canvas.create_oval(x1, y1, x2, y2, fill=hex_color, outline="")
