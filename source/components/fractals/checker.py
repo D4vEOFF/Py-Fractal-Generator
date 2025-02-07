@@ -2,7 +2,7 @@ from ..fractals.fractal import FractalType
 
 lsystem_keys = ["name", "axiom", "rules", "rotateByAngle"]
 ifs_keys = ["name", "starting_figure", "mappings"]
-tea_keys = ["name", "sequence", "next_member", "explore_var"]
+tea_keys = ["name", "sequence", "next_member", "explore_var", "plot_range", "escape_radius"]
 
 def determine_fractal_type(fractal: dict) -> FractalType:
     """
@@ -30,6 +30,7 @@ def determine_fractal_type(fractal: dict) -> FractalType:
         if not isinstance(fractal.get("rotateByAngle"), (float, int)):
             raise ValueError("L-System error: 'rotateByAngle' must be a float or an int.")
         return FractalType.LSYSTEM
+
     # Check for IFS specific structure
     elif all(key in fractal.keys() for key in ifs_keys):
         if not isinstance(fractal.get("name"), str):
@@ -43,11 +44,27 @@ def determine_fractal_type(fractal: dict) -> FractalType:
         if not all(isinstance(mapping, list) and len(mapping) == 6 and all(isinstance(value, (float, int)) for value in mapping) for mapping in fractal["mappings"]):
             raise ValueError("IFS error: Each element in 'mappings' must be a list of six floats or ints.")
         return FractalType.IFS
+
     # Check for TEA specific structure
     elif all(key in fractal.keys() for key in tea_keys):
-        if not all(isinstance(fractal.get(key), str) for key in tea_keys):
-            raise ValueError("TEA error: All keys must be strings.")
+        if not isinstance(fractal.get("name"), str):
+            raise ValueError("TEA error: 'name' must be a string.")
+        if not isinstance(fractal.get("sequence"), str):
+            raise ValueError("TEA error: 'sequence' must be a string.")
+        if not isinstance(fractal.get("next_member"), str):
+            raise ValueError("TEA error: 'next_member' must be a string.")
+        if not isinstance(fractal.get("explore_var"), str):
+            raise ValueError("TEA error: 'explore_var' must be a string.")
+        if not isinstance(fractal.get("plot_range"), list):
+            raise ValueError("TEA error: 'plot_range' must be a list of four integers.")
+        if len(fractal.get("plot_range")) != 4:
+            raise ValueError("TEA error: 'plot_range' must contain exactly four elements.")
+        if not all(isinstance(value, (float, int)) for value in fractal.get("plot_range")):
+            raise ValueError("TEA error: All elements in 'plot_range' must be integers.")
+        if not isinstance(fractal.get("escape_radius"), (float, int)):
+            raise ValueError("TEA error: 'escape_radius' must be a float or an int.")
         return FractalType.TEA
+
     else:
         raise ValueError("The provided fractal dictionary does not match any known fractal type structure.")
 

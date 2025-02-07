@@ -1,4 +1,6 @@
 
+import math
+
 from ..stack import Stack
 from ..vector import Vector
 from ..turtle import Turtle
@@ -94,30 +96,47 @@ def draw_IFS(fractal: dict, args: dict, canvas: object) -> None:
 
 
 def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
-    
     width, height = args['window_width'], args['window_height']
     step = args['step']
     max_iterations = args['iteration_count']
-    sequence, next_member, explore_var = fractal['sequence'], fractal['next_member'], fractal['explore_var']
+    sequence = fractal['sequence']
+    escape_radius = fractal["escape_radius"]
+    next_member = fractal['next_member']
+    explore_var = fractal['explore_var']
+    plot_range = fractal["plot_range"]
 
-    tea = TEA(width, height, sequence, step)
-
+    tea = TEA(width, height, sequence, step, escape_radius, tuple(plot_range), next_member, explore_var)
     tea.iterate(max_iterations)
     iter_counts = tea.point_iteration_counts
+    final_values = tea.point_last_values
 
-    # hex_color = hsv_to_hex(0.5, 1, 1)
-    # canvas.create_oval(5, 5, 2, 2, fill=hex_color)
+    point_size = step // 2
 
-    # Plot points
-    point_size = step
+    # Definice intervalu pro odstín (hue)
+    HUE_MIN = 0
+    HUE_MAX = 0.87
+    SATURATION = 1
+    VALUE = 1
+
     for x in range(len(iter_counts[0])):
         for y in range(len(iter_counts)):
             iterations = iter_counts[y][x]
-            hex_color = hsv_to_hex(iterations / max_iterations, 1, 1)
+            if iterations < max_iterations:
+                # Bod uniká – použijeme hladké zbarvení
+                z = final_values[y][x]
+                abs_z = abs(z)
+                if abs_z < 1e-10:
+                    abs_z = 1e-10
+                smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
+                norm = smooth_iter / max_iterations
+                hue = HUE_MIN + norm * (HUE_MAX - HUE_MIN)
+                hex_color = hsv_to_hex(hue, SATURATION, VALUE)
+            else:
+                # Bod patří fraktálu – vykreslíme ho černě
+                hex_color = "#000000"
 
-            x1, y1 = step * x - point_size, step * y - point_size
-            x2, y2 = step * x + point_size, step * y + point_size
-            # x1, y1 = x - point_size, y - point_size
-            # x2, y2 = x + point_size, y + point_size
-
+            x1 = step * x - point_size
+            y1 = step * y - point_size
+            x2 = step * x + point_size
+            y2 = step * y + point_size
             canvas.create_oval(x1, y1, x2, y2, fill=hex_color, outline="")

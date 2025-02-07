@@ -66,6 +66,10 @@ def main() -> None:
             print(err)
             sys.exit(-1)
 
+    # Iteration count already specified in JSON
+    if "iterations" in fractal.keys():
+        args["iteration_count"] = fractal["iterations"]
+
     # Classify fractal
     try:
         fractal_type = determine_fractal_type(fractal)

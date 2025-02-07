@@ -1,0 +1,9 @@
+{
+    "name": "Mandelbrot Set",
+    "sequence": "z**2 - 0.8 + 0.156j",
+    "next_member": "z",
+    "explore_var": "z",
+    "escape_radius": 2,
+    "plot_range": [-2, 2, -2, 2],
+    "iterations": 100
+}

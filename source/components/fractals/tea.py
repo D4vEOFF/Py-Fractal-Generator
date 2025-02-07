@@ -1,11 +1,13 @@
 
+import math
+
 from components.fractals.i_iterable import IFractalIterable
 from components.fractals.i_transformable import IFractalTransformable
 from components.vector import Vector
 
 class TEA(IFractalIterable, IFractalTransformable):
     
-    def __init__(self, width: int, height: int, sequence: str, step: int = 1, bounds: tuple = (-2, 2, -2, 2), var: str = 'z', explore_var: str = 'c'):
+    def __init__(self, width: int, height: int, sequence: str, step: int = 1, escape_radius: int = 2, bounds: tuple = (-2, 2, -2, 2), var: str = 'z', explore_var: str = 'c'):
         self._x_count, self._y_count = width // step, height // step
         
         self._iter_counts = [[0 for _ in range(self._x_count)] for _ in range(self._y_count)]
@@ -14,12 +16,15 @@ class TEA(IFractalIterable, IFractalTransformable):
         self._var = var
         self._explore_var = explore_var
         self._total_iterations = 0
+        self._escape_radius = escape_radius
 
         x_min, x_max, y_min, y_max = bounds
 
         x_vals = [x_min + step * (x_max - x_min) * j / width for j in range(self._x_count + 1)]
         y_vals = [y_min + step * (y_max - y_min) * i / height for i in range(self._y_count + 1)]
         self._complex_grid = [[x + 1j * y for x in x_vals] for y in y_vals]
+
+        self.point_last_values = [[0 for _ in range(self._x_count)] for _ in range(self._y_count)]
 
     @property
     def total_iterations(self):
@@ -90,12 +95,14 @@ class TEA(IFractalIterable, IFractalTransformable):
                 for k in range(1, iterations + 1):
                     try:
                         # Evaluate the next value in the sequence
-                        vars_dict[self._var] = eval(equation_compiled, {}, vars_dict)
+                        vars_dict[self._var] = eval(equation_compiled, {"math": math}, vars_dict)
 
                         # Check for escape condition
                         self._iter_counts[i][j] = k
-                        if abs(vars_dict[self._var]) > 2:
+                        if abs(vars_dict[self._var]) > self._escape_radius:
                             break
                     except OverflowError:
                         self._iter_counts[i][j] = k
                         break
+                
+                self.point_last_values[i][j] = vars_dict[self._var]
