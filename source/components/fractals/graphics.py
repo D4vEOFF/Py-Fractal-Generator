@@ -110,7 +110,7 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     iter_counts = tea.point_iteration_counts
     final_values = tea.point_last_values
 
-    point_size = step // 2
+    point_size = step / 2
 
     # Definice intervalu pro odstín (hue)
     HUE_MIN = 0
