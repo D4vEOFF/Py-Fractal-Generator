@@ -1,0 +1,9 @@
+{
+    "name": "Bracketed OL system n. 3",
+    "axiom": "X",
+    "rules": {
+        "X": "F[+X][-X]FX",
+        "F": "FF"
+    },
+    "rotateByAngle": 25.7
+}
