@@ -92,7 +92,7 @@ def draw_IFS(fractal: dict, args: dict, canvas: object) -> None:
         figures_listified.append(figure_listified)
 
     for figure in figures_listified:
-        canvas.create_polygon(*[coord for point in figure for coord in point], fill=args['fill_color'], outline=args['stroke_color'])
+        canvas.create_polygon(*[coord for point in figure for coord in point], fill=args['fill_color'], outline=args['stroke_color'], width=args["stroke_width"])
 
 
 def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
