@@ -1,5 +1,5 @@
 {
-    "name": "Mandelbrot Set",
+    "name": "Julia Set n. 1",
     "sequence": "z**2 + 0.7885 * math.e**(1j * 4.5 * math.pi / 8)",
     "next_member": "z",
     "explore_var": "z",

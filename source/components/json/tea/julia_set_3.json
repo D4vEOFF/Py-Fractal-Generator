@@ -1,6 +1,6 @@
 {
-    "name": "Julia Set n. 2",
-    "sequence": "z**2 - 0.8 + 0.156j",
+    "name": "Julia Set n. 3",
+    "sequence": "z**2 - 0.4 + 0.6j",
     "next_member": "z",
     "explore_var": "z",
     "escape_radius": 2,

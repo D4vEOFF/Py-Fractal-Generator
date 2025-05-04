@@ -112,7 +112,9 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
 
     point_size = step / 2
 
-    # Definice intervalu pro odstín (hue)
+    correction = 1
+
+    # Hue intervals
     HUE_MIN = 0
     HUE_MAX = 0.87
     SATURATION = 1
@@ -122,21 +124,34 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
         for y in range(len(iter_counts)):
             iterations = iter_counts[y][x]
             if iterations < max_iterations:
-                # Bod uniká – použijeme hladké zbarvení
                 z = final_values[y][x]
                 abs_z = abs(z)
                 if abs_z < 1e-10:
                     abs_z = 1e-10
+
+                # Black-and-white coloring used
+                if not args["no_colors"]:
+                    hex_color = "#FFFFFF"
+                    continue
+                
                 smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
                 norm = smooth_iter / max_iterations
                 hue = HUE_MIN + norm * (HUE_MAX - HUE_MIN)
                 hex_color = hsv_to_hex(hue, SATURATION, VALUE)
             else:
-                # Bod patří fraktálu – vykreslíme ho černě
+                # Point lies outside the set
                 hex_color = "#000000"
 
-            x1 = step * x - point_size
-            y1 = step * y - point_size
-            x2 = step * x + point_size
-            y2 = step * y + point_size
-            canvas.create_oval(x1, y1, x2, y2, fill=hex_color, outline="")
+            # Draw circle
+            # x1 = step * x - point_size
+            # y1 = step * y - point_size
+            # x2 = step * x + point_size
+            # y2 = step * y + point_size
+            # canvas.create_oval(x1, y1, x2, y2, fill=hex_color, outline="")
+
+            # Draw rectangle
+            x1 = step * x - correction
+            y1 = step * y - correction
+            x2 = step * x + 2 * point_size + correction
+            y2 = step * y + 2 * point_size + correction
+            canvas.create_rectangle(x1, y1, x2, y2, fill=hex_color, outline="")
