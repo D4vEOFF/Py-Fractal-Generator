@@ -4,6 +4,6 @@
     "next_member": "z",
     "explore_var": "z",
     "escape_radius": 2,
-    "plot_range": [-2, 2, -2, 2],
-    "iterations": 100
+    "plot_range": [-1.75, 1.75, -1.75, 1.75],
+    "iterations": 150
 }
