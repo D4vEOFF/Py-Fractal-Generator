@@ -104,6 +104,8 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     next_member = fractal['next_member']
     explore_var = fractal['explore_var']
     plot_range = fractal["plot_range"]
+    draw_boundary = args['draw_boundary']
+    no_colors = args['no_colors']
 
     tea = TEA(width, height, sequence, step, escape_radius, tuple(plot_range), next_member, explore_var)
     tea.iterate(max_iterations)
@@ -120,8 +122,30 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     SATURATION = 1
     VALUE = 1
 
+    if draw_boundary:
+        h_px = len(iter_counts)
+        w_px = len(iter_counts[0])
+        inside = [
+            [iter_counts[y][x] == max_iterations for x in range(w_px)]
+            for y in range(h_px)
+        ]
+        boundary_mask = [[False]*w_px for _ in range(h_px)]
+        for y in range(h_px):
+            for x in range(w_px):
+                if inside[y][x]:
+                    for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
+                        nx, ny = x+dx, y+dy
+                        if 0 <= nx < w_px and 0 <= ny < h_px:
+                            if not inside[ny][nx]:
+                                boundary_mask[y][x] = True
+                                break
+
     for x in range(len(iter_counts[0])):
         for y in range(len(iter_counts)):
+
+            if draw_boundary and not boundary_mask[y][x]:
+                continue
+
             iterations = iter_counts[y][x]
             if iterations < max_iterations:
                 z = final_values[y][x]
@@ -130,7 +154,7 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
                     abs_z = 1e-10
 
                 # Black-and-white coloring used
-                if not args["no_colors"]:
+                if not no_colors:
                     hex_color = "#FFFFFF"
                     continue
                 

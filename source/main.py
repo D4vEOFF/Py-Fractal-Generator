@@ -34,6 +34,7 @@ def parse_console_arguments() -> dict:
     parser.add_argument("-path", type=str, help="File path to fractal JSON definition")
     parser.add_argument("-svg-path", type=str, help="Path to save SVG output")
     parser.add_argument("--no-colors", action='store_false', default=True, help="Don't use colors to distinguish separate iterations (black-and-white coloring is used).")
+    parser.add_argument("--draw-boundary", action="store_true", help="Draw only the boundary of a TEA fractal (Julia set).")
     
     # Parse the arguments
     args = parser.parse_args()
