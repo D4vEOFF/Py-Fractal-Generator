@@ -6,15 +6,15 @@ class LSystem(IFractalIterable):
     """
     L-System class for generating fractal strings based on production rules.
     """
-    def __init__(self, start_symbol: str, rules: dict) -> None:
+    def __init__(self, axiom: str, rules: dict) -> None:
         """
         Initializes an instance of the LSystem class.
         
         Parameters:
-            start_symbol (str): The initial symbol or axiom of the L-System.
+            axiom (str): The initial symbol or axiom of the L-System.
             rules (dict): A dictionary representing the production rules for the L-System.
         """
-        self._word = start_symbol
+        self._word = axiom
         self._rules = rules
         self._total_iterations = 0
 

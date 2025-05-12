@@ -84,7 +84,7 @@ class TEA(IFractalIterable, IFractalTransformable):
         self._iter_counts = [[0 for _ in range(self._x_count)] for _ in range(self._y_count)]
         self._total_iterations += iterations
 
-        equation_compiled = compile(self._sequence, '<string>', 'eval')
+        # equation_compiled = compile(self._sequence, '<string>', 'eval')
 
         for i in range(self._y_count):
             for j in range(self._x_count):
@@ -95,7 +95,7 @@ class TEA(IFractalIterable, IFractalTransformable):
                 for k in range(1, iterations + 1):
                     try:
                         # Evaluate the next value in the sequence
-                        vars_dict[self._var] = eval(equation_compiled, {"math": math}, vars_dict)
+                        vars_dict[self._var] = eval(self._sequence, {"math": math}, vars_dict)
 
                         # Check for escape condition
                         self._iter_counts[i][j] = k
