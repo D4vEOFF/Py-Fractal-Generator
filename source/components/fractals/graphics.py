@@ -117,8 +117,8 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     correction = 1
 
     # Hue intervals
-    HUE_MIN = 0
-    HUE_MAX = 0.87
+    HUE_MIN = args['hue_min']
+    HUE_MAX = args['hue_max']
     SATURATION = 1
     VALUE = 1
 
@@ -158,9 +158,10 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
                     hex_color = "#FFFFFF"
                     continue
                 
-                smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
-                norm = smooth_iter / max_iterations
-                hue = HUE_MIN + norm * (HUE_MAX - HUE_MIN)
+                # smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
+                # norm = smooth_iter / max_iterations
+                # hue = HUE_MIN + norm * (HUE_MAX - HUE_MIN)
+                hue = HUE_MIN + iterations * (HUE_MAX - HUE_MIN) / max_iterations
                 hex_color = hsv_to_hex(hue, SATURATION, VALUE)
             else:
                 # Point lies outside the set

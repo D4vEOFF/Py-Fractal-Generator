@@ -35,6 +35,10 @@ def parse_console_arguments() -> dict:
     parser.add_argument("-svg-path", type=str, help="Path to save SVG output")
     parser.add_argument("--no-colors", action='store_false', default=True, help="Don't use colors to distinguish separate iterations (black-and-white coloring is used).")
     parser.add_argument("--draw-boundary", action="store_true", help="Draw only the boundary of a TEA fractal (Julia set).")
+    parser.add_argument("--hue-min", type=float, default=0, help="Minimum value for hue linear interpolation (Julia set).")
+    parser.add_argument("--hue-max", type=float, default=0.87, help="Minimum value for hue linear interpolation (Julia set).")
+    parser.add_argument("--sat", type=float, default=1, help="Saturation value (Julia set)")
+    parser.add_argument("--val", type=float, default=1, help="Brightness value (Julia set)")
     
     # Parse the arguments
     args = parser.parse_args()
