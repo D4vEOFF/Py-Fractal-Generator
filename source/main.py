@@ -28,7 +28,7 @@ def parse_console_arguments() -> dict:
     parser.add_argument("-fc", "--fill-color", type=str, default='red', help="Fill color (default: red)")
     parser.add_argument("-step", type=int, default=5, help="Step size (default: 5)")
     parser.add_argument("-scale", type=int, default=1, help="Plot scale (default: 1)")
-    parser.add_argument("-iter", "--iteration-count", type=int, default=1, help="Iteration count (default: 1)")
+    parser.add_argument("-iter", "--iteration-count", type=int, default=None, help="Iteration count (default: None)")
     parser.add_argument("-angle", "--start-angle", type=float, default=0, help="Start angle (default: 0)")
     parser.add_argument("-prompt", action="store_true", help="Enable prompt mode")
     parser.add_argument("-path", type=str, help="File path to fractal JSON definition")
@@ -72,8 +72,10 @@ def main() -> None:
             print(err)
             sys.exit(-1)
 
+    if args["iteration_count"] != None:
+        fractal["iterations"] = args["iteration_count"]
     # Iteration count already specified in JSON
-    if "iterations" in fractal.keys():
+    elif "iterations" in fractal.keys():
         args["iteration_count"] = fractal["iterations"]
 
     # Classify fractal
