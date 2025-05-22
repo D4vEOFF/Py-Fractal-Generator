@@ -11,7 +11,7 @@
             "program": ".\\source\\main.py",
             "console": "integratedTerminal",
             "args": [
-                "-ww", "1280", "-wh", "720", "-path", ".\\source\\components\\json\\ifs\\levi_dragon.json", "-step", "1", "-iter", "8", "-scale", "500"
+                "-ww", "400", "-wh", "300", "-path", ".\\source\\components\\json\\tea\\mandelbrot_set.json", "-step", "3", "-iter", "50", "--colors-file", ".\\source\\components\\json\\colors\\wiki-style.json"
             ]
         }
     ]

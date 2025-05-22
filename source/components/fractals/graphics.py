@@ -191,9 +191,9 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
                 norm = smooth_iter / max_iterations
 
                 # LERP
-                hue = lagrange_interpolate(hue_points, norm)
-                saturation = lagrange_interpolate(saturation_points, norm)
-                value = lagrange_interpolate(value_points, norm)
+                hue = min(1, max(lagrange_interpolate(hue_points, norm), 0))
+                saturation = min(1, max(lagrange_interpolate(saturation_points, norm), 0))
+                value = min(1, max(lagrange_interpolate(value_points, norm), 0))
                 
                 hex_color = hsv_to_hex(hue, saturation, value)
             else:
