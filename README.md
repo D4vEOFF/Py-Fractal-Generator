@@ -38,7 +38,8 @@ Pomocný program vytvořený jako součást diplomové práce s názvem **Frakt�
 ├── ...
 │   ├── components
 │   │   ├── fractals                            # Třídy pro jednotlivé typy fraktálů
-│   │   │   └── lsystem.py                          # L-systémy
+│   │   │   ├── lsystem.py                          # L-systémy
+|   |   |   ├── 
 │   │   ├── event.py                            # Třída definující rozhraní pro implementaci událostí
 │   │   ├── turtle.py                           # Třída pro želví grafiku
 │   │   └── vector.py                           # Třída pro počítání s 2D vektory
