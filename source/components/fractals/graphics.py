@@ -133,10 +133,10 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     iter_counts = tea.point_iteration_counts
     final_values = tea.point_last_values
 
+    # Drawing information
     point_size = step / 2
-
     correction = 1
-    
+
     # Parse interpolation colors
     colors_file = args["colors_file"]
     with open(colors_file) as f:
