@@ -5,5 +5,5 @@
     "explore_var": "c",
     "escape_radius": 2,
     "plot_range": [-0.75, -0.25, -0.25, -0.75],
-    "iterations": 100
+    "iterations": 50
 }

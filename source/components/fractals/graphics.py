@@ -1,5 +1,7 @@
 
 import math
+import json
+import sys
 
 from ..stack import Stack
 from ..vector import Vector
@@ -9,6 +11,25 @@ from ..color import hsv_to_hex
 from ..fractals.lsystem import LSystem
 from ..fractals.ifs import IFS
 from ..fractals.tea import TEA
+
+
+def lagrange_interpolate(points, x):
+    """
+    Calculate the interpolated polynomial value f(x) at a given x using Lagrange interpolation.
+
+    :param points: list of tuples (xi, yi) representing known data points
+    :param x: the x-value at which to evaluate the interpolated polynomial
+    :return: the interpolated value f(x)
+    """
+    total = 0.0
+    for i, (xi, yi) in enumerate(points):
+        Li = 1.0
+        for j, (xj, _) in enumerate(points):
+            if j != i:
+                Li *= (x - xj) / (xi - xj)
+        total += yi * Li
+    return total
+
 
 def draw_LSystem(fractal: dict, args: dict, canvas: object) -> None:
     """
@@ -115,13 +136,21 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
     point_size = step / 2
 
     correction = 1
+    
+    # Parse interpolation colors
+    colors_file = args["colors_file"]
+    with open(colors_file) as f:
+        try:
+            colors = json.loads(f.read())
+        except json.JSONDecodeError as err:
+            print(err)
+            sys.exit(-1)
 
-    # Hue intervals
-    HUE_MIN = args['hue_min']
-    HUE_MAX = args['hue_max']
-    SATURATION = 1
-    VALUE = 1
+    hue_points = [(i, h) for i, h in enumerate(colors["hue"])]
+    saturation_points = [(i, s) for i, s in enumerate(colors["saturation"])]
+    value_points = [(i, v) for i, v in enumerate(colors["value"])]
 
+    # Draw only boundary, if required
     if draw_boundary:
         h_px = len(iter_counts)
         w_px = len(iter_counts[0])
@@ -158,11 +187,15 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
                     hex_color = "#FFFFFF"
                     continue
                 
-                # smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
-                # norm = smooth_iter / max_iterations
-                # hue = HUE_MIN + norm * (HUE_MAX - HUE_MIN)
-                hue = HUE_MIN + iterations * (HUE_MAX - HUE_MIN) / max_iterations
-                hex_color = hsv_to_hex(hue, SATURATION, VALUE)
+                smooth_iter = iterations + 1 - math.log(math.log(abs_z)) / math.log(2)
+                norm = smooth_iter / max_iterations
+
+                # LERP
+                hue = lagrange_interpolate(hue_points, norm)
+                saturation = lagrange_interpolate(saturation_points, norm)
+                value = lagrange_interpolate(value_points, norm)
+                
+                hex_color = hsv_to_hex(hue, saturation, value)
             else:
                 # Point lies outside the set
                 hex_color = "#000000"
