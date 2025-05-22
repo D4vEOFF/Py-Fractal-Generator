@@ -227,7 +227,7 @@ Program podporuje následující parametry příkazové řádky:
 python .\main.py -path .\components\json\lsystems\bracketed_ol_2.json -iter 4 -angle -90 -step 10 -sc red
 ```
 
-![Fraktální strom](./strom.svg)
+![Fraktální strom](./tree.svg)
 
 ## Siérpínského koberec
 
