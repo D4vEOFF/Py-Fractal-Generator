@@ -16,8 +16,14 @@
   - [Třída Turtle](#třída-turtle)
   - [Třída LSystem](#třída-lsystem)
 - [Instalace](#instalace)
-- [TODO: Symboly L-systémů a jejich význam](#todo-symboly-l-systémů-a-jejich-význam)
-- [TODO: Parametry](#todo-parametry)
+- [Symboly L-systémů a jejich význam](#symboly-l-systémů-a-jejich-význam)
+- [Parametry](#parametry)
+  - [Základní nastavení](#základní-nastavení)
+  - [Juliovy množiny](#juliovy-množiny)
+- [Příklady použití](#příklady-použití)
+  - [Fraktální strom](#fraktální-strom)
+  - [Siérpínského koberec](#siérpínského-koberec)
+  - [Mandelbrotova množina](#mandelbrotova-množina)
 
 # Fractal Generator
 Pomocný program vytvořený jako součást diplomové práce s názvem **Fraktální geometrie pro (zdatné) amatéry** (odkaz [zde](https://github.com/D4vEOFF/Diploma-Thesis)).
@@ -37,12 +43,27 @@ Pomocný program vytvořený jako součást diplomové práce s názvem **Frakt�
 .
 ├── ...
 │   ├── components
-│   │   ├── fractals                            # Třídy pro jednotlivé typy fraktálů
+│   │   ├── fractals                            # Třídy a funkce pro jednotlivé typy fraktálů
 │   │   │   ├── lsystem.py                          # L-systémy
-|   |   |   ├── 
+|   |   |   ├── ifs.py                              # IFS
+|   |   |   ├── tea.py                              # Time Escape algoritmy
+|   |   |   ├── graphics.py                         # Vykreslování obrazců
+|   |   |   ├── i_iterable.py
+|   |   |   └── i_transformable.py
+│   │   ├── json                                # Soubory JSON definující jednotlivé fraktály
+│   │   │   ├── colors                          # Interpolované barvy pro TEA fraktály
+│   │   │   │   └── ...
+│   │   │   ├── lsystems
+│   │   │   │   └── ...
+|   |   |   ├── ifs
+│   │   │   │   └── ...
+|   |   |   └── tea
+│   │   │       └── ...
 │   │   ├── event.py                            # Třída definující rozhraní pro implementaci událostí
 │   │   ├── turtle.py                           # Třída pro želví grafiku
-│   │   └── vector.py                           # Třída pro počítání s 2D vektory
+│   │   ├── stack.py                            # Třídy implementující zásobník
+│   │   ├── vector.py                           # Třída pro počítání s 2D vektory
+│   │   └── evaluate.py
 │   └── main.py                             # Hlavní logika programu
 └── ...
 ```
@@ -158,6 +179,72 @@ Ve virtuálním prostředí nyní stačí doinstalovat potřebné **Python** mod
 pip install -r requirements.txt
 ```
 
-# TODO: Symboly L-systémů a jejich význam
+# Symboly L-systémů a jejich význam
 
-# TODO: Parametry
+- `A`, `B`, ..., `Z` - Krok želvy vpřed s nakreslením úsečky.
+- `f` - Krok želvy vpřed bez kreslení úsečky.
+- `+` - Otočení želvy o definovaný úhel vpravo.
+- `-` - Otočení želvy o definovaný úhel vlevo.
+- `[` - Uložení aktuální pozice a úhlu želvy na vrchol zásobníku.
+- `]` - Obnovení poslední uložené pozice a úhlu z vrcholu zásobníku.
+
+# Parametry
+
+## Základní nastavení
+
+Program podporuje následující parametry příkazové řádky:
+
+- `-ww`, `--window-width` - Šířka okna (výchozí: 1280)
+- `-wh`, `--window-height` - Výška okna (výchozí: 720)
+- `-sc`, `--stroke-color` - Barva čáry (výchozí: black)
+- `-sw`, `--stroke-width` - Šířka čáry (výchozí: 3)
+- `-fc`, `--fill-color` - Výplňová barva (výchozí: red)
+- `-step` - Velikost kroku (výchozí: 5)
+- `-scale` - Měřítko vykreslení (výchozí: 1)
+- `-iter`, --iteration-count: Počet iterací (výchozí: None)
+- `-angle`, `--start-angle` - Počáteční úhel (výchozí: 0)
+- `-prompt` - Režim interaktivního zadávání (příznak)
+- `-path` - Cesta k JSON definici fraktálu
+- `-svg-path` - Cesta pro uložení SVG výstupu
+
+## Juliovy množiny
+
+- `--no-colors` - Vypnutí barevného rozlišení iterací (černobílý režim)
+- `--draw-boundary` - Kreslení pouze hranice TEA fraktálu (Julia set)
+- `--hue-min` - Minimální hodnota odstínu pro interpolaci (výchozí: 0)
+- `--hue-max` - Maximální hodnota odstínu pro interpolaci (výchozí: 0.87)
+- `--sat-min` - Minimální sytost pro interpolaci (výchozí: 1)
+- `--sat-max` - Maximální sytost pro interpolaci (výchozí: 1)
+- `--val-min` - Minimální jas pro interpolaci (výchozí: 1)
+- `--val-max` - Maximální jas pro interpolaci (výchozí: 1)
+- `--colors-file` - Cesta k JSON s definicemi barev (výchozí: `".\components\json\colors\basic.json"`)
+
+# Příklady použití
+
+## Fraktální strom
+
+```
+python .\main.py -path .\components\json\lsystems\bracketed_ol_2.json -iter 4 -angle -90 -step 10 -sc red
+```
+
+![Fraktální strom](./strom.svg)
+
+## Siérpínského koberec
+
+```
+python .\main.py -path .\components\json\ifs\sierpinsky_carpet.json -iter 4 -scale 700
+```
+
+Červená je nastavena jako výchozí barva. Lze změnit pomocí parametru `-fc`.
+
+![Siérpínského koberec](./sierpinsky_carpet.svg)
+
+## Mandelbrotova množina
+
+```
+python .\main.py -path .\components\json\tea\mandelbrot_set.json -ww 800 -wh 600 -iter 100 -step 1
+```
+
+Využity základní barvy v souboru `basic.json`.
+
+![Mandelbrotova množina](./mandelbrot_set.svg)
