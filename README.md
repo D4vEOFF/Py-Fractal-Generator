@@ -14,7 +14,7 @@
     - [lsystem.py](#lsystempy)
     - [ifs.py](#ifspy)
     - [tea.py](#teapy)
-- [Příklad použití](#příklad-použití)
+- [Příklad použití a generování L-systémů](#příklad-použití-a-generování-l-systémů)
   - [Třída Turtle](#třída-turtle)
   - [Třída LSystem](#třída-lsystem)
 - [Instalace](#instalace)
@@ -154,7 +154,8 @@ Třída pro práci s fraktály vnikající pomocí Time Escape algoritmu. (Více
 - **Metody**
   - `iterate(iterations)` - provede zadaný počet iterací.
 
-# Příklad použití
+# Příklad použití a generování L-systémů
+
 ## Třída Turtle
 ```python
 # Nová instance třídy Turtle
