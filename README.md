@@ -12,6 +12,8 @@
     - [stack.py](#stackpy)
   - [Fraktály](#fraktály)
     - [lsystem.py](#lsystempy)
+    - [ifs.py](#ifspy)
+    - [tea.py](#teapy)
 - [Příklad použití](#příklad-použití)
   - [Třída Turtle](#třída-turtle)
   - [Třída LSystem](#třída-lsystem)
@@ -125,13 +127,32 @@ Implementuje zásobník (datovou strukturu).
 ## Fraktály
 
 ### lsystem.py
-Implementuje třídu pro práci s *L-systémy*. (Více informací k L-systémům např. [zde](https://en.wikipedia.org/wiki/L-system#:~:text=An%20L%2Dsystem%20consists%20of,generated%20strings%20into%20geometric%20structures.))
-- **Vlastnosti:**
+Implementuje třídu pro práci s *L-systémy*. (Více informací k L-systémům např. [zde](https://en.wikipedia.org/wiki/L-system#:~:text=An%20L%2Dsystem%20consists%20of,generated%20strings%20into%20geometric%20structures.).)
+- **Vlastnosti**
   - `word` - aktuální řetězec vzniklý aplikací pravidel z počátečního symbolu (tzv. axiomu),
   - `rules` - slovník uchovávající přepisovací pravidla,
   - `total_iterations` - celkový počet již provedených iterací
 - **Metody**
   - `iterate(iteration_count)` - vypočítá zadaný počet iterací L-systému z aktuálního řetězce
+
+### ifs.py
+Třída pro práci se *systémy iterovaných funkcí*. (Více informací např. [zde](https://cs.wikipedia.org/wiki/Syst%C3%A9m_iterovan%C3%BDch_funkc%C3%AD).)
+- **Vlastnosti**
+  - `figures` - seznam vytvořených všech útvarů (mnohoúhelníků).
+- **Metody**
+  - `scale(factor)` - zvětší všechny vytvořené obrazce o zadaný faktor,
+  - `translate(translation_vector)` - posune všechny vytvořené obrazce o zadaný vektor,
+  - `rotate(angle)` - Otočí celý obrazec o zadaný úhel okolo počátku,
+  - `center_to(xc, yc)` - posune střed vytvořeného obrazce do zadané pozice,
+  - `iterate(iterations)` - provede zadaný počet iterací.
+
+### tea.py
+Třída pro práci s fraktály vnikající pomocí Time Escape algoritmu. (Více informací např. [zde](https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set).)
+- **Vlastnosti**
+  - `total_iterations` - celkový počet provedených iterací,
+  - `point_iteration_counts` - seznam počtů iterací pro každý bod, než absolutní hodnota členu posloupnosti iterací překročila zadanou mez.
+- **Metody**
+  - `iterate(iterations)` - provede zadaný počet iterací.
 
 # Příklad použití
 ## Třída Turtle
