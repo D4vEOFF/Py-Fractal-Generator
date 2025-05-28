@@ -121,7 +121,6 @@ class TEA(IFractalIterable, IFractalTransformable):
                 
                 self.point_last_values[i][j] = vars_dict[self._var]
                 
-                iterated_points_len = len(iterated_points_indexes)
                 for index, (i0, j0) in enumerate(iterated_points_indexes):
                     if self._iter_counts[i][j] == iterations:
                         self._iter_counts[i0][j0] = iterations
