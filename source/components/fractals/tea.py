@@ -17,6 +17,7 @@ class TEA(IFractalIterable, IFractalTransformable):
         self._explore_var = explore_var
         self._total_iterations = 0
         self._escape_radius = escape_radius
+        self._step = step
 
         x_min, x_max, y_min, y_max = bounds
 
@@ -84,10 +85,18 @@ class TEA(IFractalIterable, IFractalTransformable):
         self._iter_counts = [[0 for _ in range(self._x_count)] for _ in range(self._y_count)]
         self._total_iterations += iterations
 
-        # equation_compiled = compile(self._sequence, '<string>', 'eval')
+        x_min = self._complex_grid[0][0].real
+        y_min = self._complex_grid[0][0].imag
 
         for i in range(self._y_count):
             for j in range(self._x_count):
+
+                if self._iter_counts[i][j] != 0:
+                    continue
+
+                # List of iterated points
+                iterated_points_indexes = []
+
                 # Initialize variables
                 vars_dict = {self._var: 0, self._explore_var: self._complex_grid[i][j]}
 
@@ -96,6 +105,11 @@ class TEA(IFractalIterable, IFractalTransformable):
                     try:
                         # Evaluate the next value in the sequence
                         vars_dict[self._var] = eval(self._sequence, {"math": math}, vars_dict)
+
+                        j0 = math.floor((self._complex_grid[i][j].real - x_min) / self._step)
+                        i0 = math.floor((self._complex_grid[i][j].imag - y_min) / self._step)
+
+                        iterated_points_indexes.append((i0, j0))
 
                         # Check for escape condition
                         self._iter_counts[i][j] = k
@@ -106,3 +120,10 @@ class TEA(IFractalIterable, IFractalTransformable):
                         break
                 
                 self.point_last_values[i][j] = vars_dict[self._var]
+                
+                iterated_points_len = len(iterated_points_indexes)
+                for index, (i0, j0) in enumerate(iterated_points_indexes):
+                    if self._iter_counts[i][j] == iterations:
+                        self._iter_counts[i0][j0] = iterations
+                    else:
+                        self._iter_counts[i0][j0] = self._iter_counts[i][j] - index + 1

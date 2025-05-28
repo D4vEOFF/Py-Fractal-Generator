@@ -197,7 +197,7 @@ def draw_TEA(fractal: dict, args: dict, canvas: object) -> None:
                 
                 hex_color = hsv_to_hex(hue, saturation, value)
             else:
-                # Point lies outside the set
+                # Point lies inside the set
                 hex_color = "#000000"
 
             # Draw circle
